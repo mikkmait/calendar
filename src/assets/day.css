@@ -1,13 +1,17 @@
-.day {
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
+.day-static {
+ display: flex;
+ flex-direction: column;
+ position: relative;
+ left: 0px;
+ padding: 16px;
+ color: rgba(255, 240, 255, 100%);
 
-  border: 1px solid rgba(255, 0, 127, 100%);
+ border: 1px solid rgba(255, 0, 127, 100%);
+ transition: color linear .7s, border linear 1s;
 }
 
 .date {
-  font-size: 2rem;
-  font-weight: bold;
-  line-height: 1.6rem;
+ font-size: 2rem;
+ font-weight: bold;
+ line-height: 1.6rem;
 }

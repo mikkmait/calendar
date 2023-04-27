@@ -2,19 +2,13 @@
   export default {
     name: 'DayContainer',
     props: {
-      today: {
-        required: true
-      },
-      weekDay: {
-        required: true
-      }
+      date: {required: true}
     }
   }
 </script>
 
 <template>
-  <div class="day">
-    <p class="date">{{ today }}</p>
-    <p>{{ weekDay }}</p>
+  <div class="day-static">
+    <p class="date">{{ date }}</p>
   </div>
 </template>

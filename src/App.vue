@@ -21,7 +21,8 @@ export default {
    thisMonth: new Date().getMonth(),
    thisYear: new Date().getFullYear(),
    countMth: 0,
-   countYear: 0
+   countYear: 0,
+   weekdays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
   }
  },
  computed: {
@@ -30,33 +31,69 @@ export default {
    const today = new Date()
    const prevMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth, 0)
    const thisMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth)
-   const nextMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth, + 1, 1)
+   const nextMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth + 1, 1)
    const daysInPrevMth = getDaysInMonth(prevMth.getFullYear(), prevMth.getMonth())
     .slice(prevMth.getDay() !== 0 ? prevMth.getDay() * - 1 : 99)
    calContent.push(...daysInPrevMth)
    const daysInThisMth = getDaysInMonth(thisMth.getFullYear(), thisMth.getMonth())
    calContent.push(...daysInThisMth)
    const daysInNextMth = getDaysInMonth(nextMth.getFullYear(), nextMth.getMonth())
-    .slice(0, 42 - calContent.length)
+    .slice(0, calContent.length <= 35 ? 35 - calContent.length : 42 - calContent.length)
    calContent.push(...daysInNextMth)
-   // console.log(calContent)
    return calContent
+  },
+  currentMth() {
+    const today = new Date()
+    const thisMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth)
+    const displayMonth = thisMth.getMonth()
+    const displayYear = thisMth.getFullYear()
+    return {displayMonth, displayYear}
   }
  },
  methods: {
   onMthButtonClick (payload) {
-   if (payload === '<') {
-    this.countMth -= 1
-   } else if (payload === '>') {
-    this.countMth += 1
-   }
+    const getMonth = document.getElementsByClassName('month')
+      if (payload === '<') {
+        for (let item of getMonth) {
+          item.classList.add('month-move-right')
+        }
+      } else if (payload === '>') {
+        for (let item of getMonth) {
+          item.classList.add('month-move-left')
+        }
+      }
+    setTimeout(() => {
+      if (payload === '<') {
+        this.countMth -= 1
+      } else if (payload === '>') {
+        this.countMth += 1
+      }
+      for (let item of getMonth) {
+        item.classList.remove('month-move-left', 'month-move-right')
+      }
+    }, 800)
   },
   onYearButtonClick (payload) {
-   if (payload === '<<') {
-    this.countYear -= 1
-   } else if (payload === '>>') {
-    this.countYear += 1
-   }
+    const getMonth = document.getElementsByClassName('month')
+    if (payload === '<<') {
+      for (let item of getMonth) {
+        item.classList.add('month-move-farright')
+      }
+    } else if (payload === '>>') {
+      for (let item of getMonth) {
+        item.classList.add('month-move-farleft')
+      }
+    }
+    setTimeout(() => {
+      if (payload === '<<') {
+        this.countYear -= 1
+      } else if (payload === '>>') {
+        this.countYear += 1
+      }
+      for (let item of getMonth) {
+        item.classList.remove('month-move-farleft', 'month-move-farright')
+      }
+    }, 800)
   },
   translateMonth(month) {
    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -69,18 +106,19 @@ export default {
 </script>
 
 <template>
- <div>
   <div class="cal-head">
-  <NavButton label="<<" @clicked="onYearButtonClick" />
-  <NavButton label="<" @clicked="onMthButtonClick" />
-   {{ translateMonth((Math.abs(thisMonth + countMth)) % 12) }}
-   {{ thisYear + countYear }}
-  <NavButton label=">" @clicked="onMthButtonClick" />
-  <NavButton label=">>" @clicked="onYearButtonClick" />
-  </div>
+   <div class="nav-item"><NavButton label="<<" @clicked="onYearButtonClick" /></div>
+   <div class="nav-item"><NavButton label="<" @clicked="onMthButtonClick" /></div>
+   <div class="nav-item">
+    {{ translateMonth(currentMth.displayMonth) }}
+    {{ currentMth.displayYear }}
+   </div>
+   <div class="nav-item"><NavButton label=">" @clicked="onMthButtonClick" /></div>
+   <div class="nav-item"><NavButton label=">>" @clicked="onYearButtonClick" /></div>
   </div>
   <month-container
    :data="daysInCal"
+   :weekdays="weekdays"
   />
 </template>
 
