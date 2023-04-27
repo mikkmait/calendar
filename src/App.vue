@@ -33,12 +33,12 @@ export default {
    const thisMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth)
    const nextMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth + 1, 1)
    const daysInPrevMth = getDaysInMonth(prevMth.getFullYear(), prevMth.getMonth())
-    .slice(prevMth.getDay() !== 0 ? prevMth.getDay() * - 1 : 99)
+    .slice(prevMth.getDay() !== 0 ? (prevMth.getDay() + 7) * - 1 : -7)
    calContent.push(...daysInPrevMth)
    const daysInThisMth = getDaysInMonth(thisMth.getFullYear(), thisMth.getMonth())
    calContent.push(...daysInThisMth)
    const daysInNextMth = getDaysInMonth(nextMth.getFullYear(), nextMth.getMonth())
-    .slice(0, calContent.length <= 35 ? 35 - calContent.length : 42 - calContent.length)
+    .slice(0, 49 - calContent.length)
    calContent.push(...daysInNextMth)
    return calContent
   },
@@ -119,6 +119,7 @@ export default {
   <month-container
    :data="daysInCal"
    :weekdays="weekdays"
+   :currentmonth="currentMth"
   />
 </template>
 

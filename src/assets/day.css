@@ -1,13 +1,33 @@
-.day-static {
+.day-current {
  display: flex;
  flex-direction: column;
  position: relative;
  left: 0px;
  padding: 16px;
  color: rgba(255, 240, 255, 100%);
+ background-color: rgba(255, 0, 127, 15%);
 
- border: 1px solid rgba(255, 0, 127, 100%);
+ border: 3px solid rgba(255, 0, 127, 100%);
  transition: color linear .7s, border linear 1s;
+}
+
+.day-out {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: 0px;
+  padding: 16px;
+  color: rgba(255, 240, 255, 30%);
+ 
+  border: 1px solid rgba(127, 127, 127, 100%);
+  transition: color linear .7s, border linear 1s;
+ }
+
+.day-current:hover {
+  scale: 125%;
+  background-color: rgba(255, 0, 127, 100%);
+  border-radius: 16px;
+  transition: all linear .2s;
 }
 
 .date {

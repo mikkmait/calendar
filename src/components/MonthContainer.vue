@@ -5,7 +5,8 @@ export default {
   name: 'MonthContainer',
   props: {
    data: Array,
-   weekdays: Array
+   weekdays: Array,
+   currentmonth: Object
   },
   data () {
     return {
@@ -23,6 +24,8 @@ export default {
   <div class="month">
     <DayContainer v-for="day in data" 
     :date="day.getDate()"
+    :month="day.getMonth()"
+    :currentmonth="currentmonth"
     />
   </div>
 </template>
