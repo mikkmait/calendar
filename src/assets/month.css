@@ -2,8 +2,7 @@
 .month {
   position: relative;
   left: 0px;
-  width: 80%;
-  height: 80%;
+  width: 90%;
   display: grid;
   grid-auto-flow: row;
   grid-template-columns: repeat(7, 1fr);
@@ -43,13 +42,54 @@
 
 .day-identifier {
   display: flex;
-  width: 80%;
+  width: 90%;
   text-align: center;
 }
 
 .day-item {
-  /* border: 1px solid rgba(255, 0, 127, 100%); */
+  flex: 1 1 0;
+  padding: .5rem;
+}
+
+dialog {
+  background-color: rgba(0, 0, 0, 25%);
+  color: rgba(255, 240, 255, 100%);
+  border: 8px solid rgba(255, 240, 255, 15%);
+  position: relative;
+  width: 50%;
+  height: 50%;
+  padding: 32px;
+  left: 25%;
+  top: 25%;
+  border-radius: 32px;
+  backdrop-filter: blur(4px);
+}
+
+.dialog-top {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
-  padding: 1rem;
+}
+
+.dialog-heading {
+  color:rgba(255, 240, 255, 100%);
   font-weight: bold;
+}
+
+.event {
+  padding: 16px;
+}
+
+button.dialog-close {
+  color: rgba(255, 240, 255, 100%);
+  border: 0;
+  background-color: rgba(0, 0, 0, 0%);
+  cursor: pointer;
+}
+
+button.dialog-close:focus {
+  outline: none;
+  color: rgba(255, 240, 255, 100%);
+  border: 0;
+  background-color: rgba(0, 0, 0, 0%);
 }

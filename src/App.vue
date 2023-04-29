@@ -1,4 +1,3 @@
-
 <script>
 import MonthContainer from './components/MonthContainer.vue'
 import NavButton from './components/NavButton.vue'
@@ -17,30 +16,31 @@ export default {
  name: 'App',
  data () {
   return {
-   today: new Date(),
-   thisMonth: new Date().getMonth(),
-   thisYear: new Date().getFullYear(),
-   countMth: 0,
-   countYear: 0,
-   weekdays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    today: new Date(),
+    thisMonth: new Date().getMonth(),
+    thisYear: new Date().getFullYear(),
+    countMth: 0,
+    countYear: 0,
+    weekdays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
   }
  },
  computed: {
   daysInCal () {
-   let calContent = []
-   const today = new Date()
-   const prevMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth, 0)
-   const thisMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth)
-   const nextMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth + 1, 1)
-   const daysInPrevMth = getDaysInMonth(prevMth.getFullYear(), prevMth.getMonth())
+    let calContent = []
+    const today = new Date()
+    const prevMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth, 0)
+    const thisMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth)
+    const nextMth = new Date(today.getFullYear() + this.countYear, today.getMonth() + this.countMth + 1, 1)
+    const daysInPrevMth = getDaysInMonth(prevMth.getFullYear(), prevMth.getMonth())
     .slice(prevMth.getDay() !== 0 ? (prevMth.getDay() + 7) * - 1 : -7)
-   calContent.push(...daysInPrevMth)
-   const daysInThisMth = getDaysInMonth(thisMth.getFullYear(), thisMth.getMonth())
-   calContent.push(...daysInThisMth)
-   const daysInNextMth = getDaysInMonth(nextMth.getFullYear(), nextMth.getMonth())
+    calContent.push(...daysInPrevMth)
+    const daysInThisMth = getDaysInMonth(thisMth.getFullYear(), thisMth.getMonth())
+    calContent.push(...daysInThisMth)
+    const daysInNextMth = getDaysInMonth(nextMth.getFullYear(), nextMth.getMonth())
     .slice(0, 49 - calContent.length)
-   calContent.push(...daysInNextMth)
-   return calContent
+    calContent.push(...daysInNextMth)
+    console.log(calContent)
+    return calContent
   },
   currentMth() {
     const today = new Date()
@@ -53,46 +53,30 @@ export default {
  methods: {
   onMthButtonClick (payload) {
     const getMonth = document.getElementsByClassName('month')
-      if (payload === '<') {
-        for (let item of getMonth) {
-          item.classList.add('month-move-right')
-        }
-      } else if (payload === '>') {
-        for (let item of getMonth) {
-          item.classList.add('month-move-left')
-        }
-      }
+    const getHeading = document.getElementById('heading')
+    getHeading.classList.add('hide')
+      if (payload === '<') {for (let item of getMonth) {item.classList.add('month-move-right')}}
+      else if (payload === '>') {for (let item of getMonth) {item.classList.add('month-move-left')}}
     setTimeout(() => {
-      if (payload === '<') {
-        this.countMth -= 1
-      } else if (payload === '>') {
-        this.countMth += 1
-      }
-      for (let item of getMonth) {
-        item.classList.remove('month-move-left', 'month-move-right')
-      }
+      if (payload === '<') {this.countMth -= 1}
+      else if (payload === '>') {this.countMth += 1}
+      for (let item of getMonth) {item.classList.remove('month-move-left', 'month-move-right')}
+      const getHeading = document.getElementById('heading')
+      getHeading.classList.remove('hide')
     }, 800)
   },
   onYearButtonClick (payload) {
     const getMonth = document.getElementsByClassName('month')
-    if (payload === '<<') {
-      for (let item of getMonth) {
-        item.classList.add('month-move-farright')
-      }
-    } else if (payload === '>>') {
-      for (let item of getMonth) {
-        item.classList.add('month-move-farleft')
-      }
-    }
+    const getHeading = document.getElementById('heading')
+    getHeading.classList.add('hide')
+    if (payload === '<<') {for (let item of getMonth) {item.classList.add('month-move-farright')}}
+    else if (payload === '>>') {for (let item of getMonth) {item.classList.add('month-move-farleft')}}
     setTimeout(() => {
-      if (payload === '<<') {
-        this.countYear -= 1
-      } else if (payload === '>>') {
-        this.countYear += 1
-      }
-      for (let item of getMonth) {
-        item.classList.remove('month-move-farleft', 'month-move-farright')
-      }
+      if (payload === '<<') {this.countYear -= 1}
+      else if (payload === '>>') {this.countYear += 1}
+      for (let item of getMonth) {item.classList.remove('month-move-farleft', 'month-move-farright')}
+      const getHeading = document.getElementById('heading')
+      getHeading.classList.remove('hide')
     }, 800)
   },
   translateMonth(month) {
@@ -107,19 +91,19 @@ export default {
 
 <template>
   <div class="cal-head">
-   <div class="nav-item"><NavButton label="<<" @clicked="onYearButtonClick" /></div>
-   <div class="nav-item"><NavButton label="<" @clicked="onMthButtonClick" /></div>
-   <div class="nav-item">
+   <div class="nav-item">Previous year<NavButton label="<<" @clicked="onYearButtonClick" /></div>
+   <div class="nav-item">Previous month<NavButton label="<" @clicked="onMthButtonClick" /></div>
+   <div class="nav-item heading" id="heading">
     {{ translateMonth(currentMth.displayMonth) }}
     {{ currentMth.displayYear }}
    </div>
-   <div class="nav-item"><NavButton label=">" @clicked="onMthButtonClick" /></div>
-   <div class="nav-item"><NavButton label=">>" @clicked="onYearButtonClick" /></div>
+   <div class="nav-item">Next month<NavButton label=">" @clicked="onMthButtonClick" /></div>
+   <div class="nav-item">Next year<NavButton label=">>" @clicked="onYearButtonClick" /></div>
   </div>
   <month-container
    :data="daysInCal"
    :weekdays="weekdays"
-   :currentmonth="currentMth"
+   :currentMonth="currentMth"
   />
 </template>
 
