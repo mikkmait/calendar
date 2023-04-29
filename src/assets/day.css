@@ -1,15 +1,14 @@
 .day-current {
- display: flex;
- flex-direction: column;
- position: relative;
- left: 0px;
- padding: 16px;
- color: rgba(255, 240, 255, 100%);
- background-color: rgba(255, 0, 127, 15%);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: 0px;
+  padding: 16px;
+  color: rgba(255, 240, 255, 100%);
+  background-color: rgba(255, 0, 127, 15%);
 
- border: 1px solid rgba(255, 0, 127, 100%);
- border-radius: 8px;
- transition: color linear .7s, border linear 1s;
+  border: 1px solid rgba(255, 0, 127, 100%);
+  transition: color linear .7s, border linear 0s;
 }
 
 .day-out {
@@ -21,21 +20,22 @@
   color: rgba(255, 240, 255, 10%);
  
   border: 1px solid rgba(127, 127, 127, 25%);
-  border-radius: 8px;
-  transition: color linear .7s, border linear 1s;
+  transition: color linear .7s, border linear 0s;
  }
 
 .day-current:hover {
   z-index: 1;
   scale: 125%;
   background-color: rgba(255, 0, 127, 100%);
-  border-radius: 16px;
   transition: all linear .2s;
   cursor: pointer;
 }
 
 .date {
- font-size: 2rem;
- font-weight: bold;
- line-height: 1.6rem;
+  box-sizing: border-box;
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 1.6rem;
+  margin: 2px;
+  border-radius: 16px;
 }

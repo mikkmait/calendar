@@ -39,7 +39,6 @@ export default {
     const daysInNextMth = getDaysInMonth(nextMth.getFullYear(), nextMth.getMonth())
     .slice(0, 49 - calContent.length)
     calContent.push(...daysInNextMth)
-    console.log(calContent)
     return calContent
   },
   currentMth() {
@@ -101,7 +100,7 @@ export default {
    <div class="nav-item">Next year<NavButton label=">>" @clicked="onYearButtonClick" /></div>
   </div>
   <month-container
-   :data="daysInCal"
+   :dates="daysInCal"
    :weekdays="weekdays"
    :currentMonth="currentMth"
   />
