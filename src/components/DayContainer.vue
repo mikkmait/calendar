@@ -12,7 +12,7 @@ export default {
       this.$emit('dayClicked', date)
       this.$emit('eventSort', {year: this.currentMonth.displayYear, month: this.currentMonth.displayMonth, date: this.date})
       this.$emit('eventList', {year: this.currentMonth.displayYear, month: this.currentMonth.displayMonth, date: this.date})
-      console.log(this.border)
+      this.$emit('birthdayList', {year: this.currentMonth.displayYear, month: this.currentMonth.displayMonth, date: this.date})
     },
     translateMonth(month) {
       const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -36,6 +36,7 @@ export default {
 <template>
   <div class="date day-out"
     v-if="this.month !== this.currentMonth.displayMonth"
+    :style="{ 'border-width': this.border.borderWidth + 'px', 'border-color': this.border.borderColor, padding: 16 - this.border.borderWidth + 'px' }"
   >
     <p class="date">{{ date }}</p>
   </div>

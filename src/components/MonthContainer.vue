@@ -1,7 +1,10 @@
 <script>
 import { events } from '../data/events.js'
+import { birthdays } from '../data/events.js'
 import DayContainer from './dayContainer.vue'
 import EventList from './EventList.vue'
+import BirthdayList from './BirthdayList.vue'
+import AllDay from './AllDay.vue'
 
 export default {
   name: 'MonthContainer',
@@ -14,8 +17,9 @@ export default {
     return {
       date: new Date(),
       events: events(),
-      dateEvents: []
-      // borderWeight: 0
+      birthdays: birthdays(),
+      dateEvents: [],
+      dateBirthdays: []
     }
   },
   computed: {
@@ -35,15 +39,34 @@ export default {
       const eventSort = date
       return eventSort
     },
+    birthdayList(date) {
+      const mapped = this.birthdays.map(item => {
+        return {
+          name: item.firstName + ' ' + item.lastName,
+          year: item.year,
+          month: item.month,
+          date: item.date
+        }
+      })
+      const mappedFiltered = this.eventSort(date.month + '' + date.date)
+        ? mapped.filter(item =>
+          item.month + '' + item.date ===
+          this.eventSort(date.month) + '' + this.eventSort(date.date))
+        : mapped
+      this.dateBirthdays = mappedFiltered
+      return mappedFiltered
+    },
     eventList(date) {
       const mapped = this.events.map(item => {
         return {
           year: item.year,
           month: item.month,
           date: item.date,
-          time: item.time,
+          time: item.timeHour + ':' + item.timeMinute ,
           type: item.type,
-          name: item.name
+          name: item.name,
+          location: item.location,
+          allDay: item.allDay
         }
       })
       const mappedFiltered = this.eventSort(date.year + '' + date.month + '' + date.date)
@@ -51,12 +74,10 @@ export default {
           item.year + '' + item.month + '' + item.date ===
           this.eventSort(date.year) + '' + this.eventSort(date.month) + '' + this.eventSort(date.date))
         : mapped
-      // this.borderWeight = 0
-      // this.borderWeight = mappedFiltered.length
-      // console.log(mappedFiltered)
-      // console.log(this.borderWeight)
       this.dateEvents = mappedFiltered
-      return mappedFiltered
+      return mappedFiltered.sort((a, b) => {
+        return a.time.localeCompare(b.time)
+      })
     },
     translateMonth(month) {
       const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -72,10 +93,10 @@ export default {
       let borderColor = 'rgba(' + borderRed + ', ' + borderGreen + ', ' + borderBlue + ', 100%)'
       for (let i = 0; i < this.events.length; i++) {
         if (year + '' + month + '' + date === this.events[i].year + '' + this.events[i].month + '' + this.events[i].date) {
-          borderWidth += .5
-          borderRed -= 127
+          borderWidth += 1
+          // borderRed -= 16
           borderGreen += 64
-          borderBlue = 0
+          borderBlue += 32
         }
       }
       borderColor = 'rgba(' + borderRed + ', ' + borderGreen + ', ' + borderBlue + ', 100%)'
@@ -86,7 +107,7 @@ export default {
       return event
     }
   },
-  components: { DayContainer, EventList }
+  components: { DayContainer, EventList, BirthdayList, AllDay }
 }
 </script>
 
@@ -103,6 +124,7 @@ export default {
       @dayClicked="clickOnDate"
       @eventSort="eventSort"
       @eventList="eventList"
+      @birthdayList="birthdayList"
     />
   </div>
   <dialog id="date-closeup">
@@ -110,6 +132,8 @@ export default {
       <span class="dialog-heading"></span>
       <button class="dialog-close" @click="closeDialog">X</button>
     </div>
-    <EventList :events="dateEvents" />
+    <div class="birthday-list"><BirthdayList :birthdays="dateBirthdays" v-if="dateBirthdays.length > 0"/></div> 
+    <div class="event-list"><AllDay :events="dateEvents"/></div>
+    <div class="event-list"><EventList :events="dateEvents" /></div>
   </dialog>
 </template>

@@ -1,47 +1,81 @@
 <script>
-
 export default {
   name: 'EventList',
   props: {
     events: {required: true}
   },
-  computed: {
-    shoeEvents() {
-      console.log(this.events)
+  methods: {
+    sortEvents() {
+      let Events = []
+      this.events.forEach(event => {
+        if (event.allDay === false) {
+          Events.push(event)
+        }
+      })
+      return Events
     }
   }
 }
-
 </script>
 
 <template>
-      <p class="single-event" v-for="event in events">
-        <p class="eventlist hour">{{ event.time }}</p>
-        <span class="eventlist type">{{ event.type }}</span>
-        <span class="eventlist name">{{ event.name }}</span>
-        <span class="eventlist location">{{ event.location }}</span>
+  <p class="schedule-heading"
+    v-if="sortEvents().length > 0">
+    Schedule:
+  </p>
+  <p class="single-event"
+    v-for="event in sortEvents()">
+    <div>
+      <p class="eventlist time">
+        {{ event.time }}
+        <span class="eventlist type">
+          {{ event.type }}</span>
       </p>
+      <span class="eventlist name">
+        {{ event.name }}</span>
+      <span class="eventlist location">
+        {{ event.location }}</span>
+    </div>
+  </p>
 </template>
 
-<style>
+<style scoped>
+.schedule-heading {
+  font-size: .5rem;
+  font-weight: bold;
+  text-transform: uppercase;
 
-.eventlist {
-  margin: 4px;
+  margin: 1rem 2rem; 
+}
+.single-event {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
 }
 
-.hour {
+.eventlist {
+  margin-right: 1rem;
+}
+
+.time {
   font-size: .8rem;
-  margin: 16px 0 0 0;
+  font-weight: bold;
 }
 
 .type {
   font-size: .5rem;
-  margin-left: 2rem;
+  text-transform: uppercase;
+  color: rgba(255, 225, 255, 100%);
 }
 
 .name {
   color: rgba(255, 0, 127, 100%);
   font-weight: bold;
+
+  margin-left: 1rem;
+}
+
+.location {
+  font-size: .5rem;
 }
 
 </style>

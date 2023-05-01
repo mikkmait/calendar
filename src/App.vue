@@ -105,7 +105,3 @@ export default {
    :currentMonth="currentMth"
   />
 </template>
-
-<style>
-
-</style>
