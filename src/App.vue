@@ -90,14 +90,14 @@ export default {
 
 <template>
   <div class="cal-head">
-   <div class="nav-item">Previous year<NavButton label="<<" @clicked="onYearButtonClick" /></div>
-   <div class="nav-item">Previous month<NavButton label="<" @clicked="onMthButtonClick" /></div>
+   <div class="nav-item"><NavButton label="<<" @clicked="onYearButtonClick" /></div>
+   <div class="nav-item"><NavButton label="<" @clicked="onMthButtonClick" /></div>
    <div class="nav-item heading" id="heading">
     {{ translateMonth(currentMth.displayMonth) }}
     {{ currentMth.displayYear }}
    </div>
-   <div class="nav-item">Next month<NavButton label=">" @clicked="onMthButtonClick" /></div>
-   <div class="nav-item">Next year<NavButton label=">>" @clicked="onYearButtonClick" /></div>
+   <div class="nav-item"><NavButton label=">" @clicked="onMthButtonClick" /></div>
+   <div class="nav-item"><NavButton label=">>" @clicked="onYearButtonClick" /></div>
   </div>
   <month-container
    :dates="daysInCal"

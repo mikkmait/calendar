@@ -5,14 +5,15 @@ export default {
     date: {required: true},
     month: {required: true},
     currentMonth: Object,
-    border: Object
+    border: Object,
+    background: Object
   },
   methods: {
-    dayClick (date) {
-      this.$emit('dayClicked', date)
-      this.$emit('eventSort', {year: this.currentMonth.displayYear, month: this.currentMonth.displayMonth, date: this.date})
-      this.$emit('eventList', {year: this.currentMonth.displayYear, month: this.currentMonth.displayMonth, date: this.date})
-      this.$emit('birthdayList', {year: this.currentMonth.displayYear, month: this.currentMonth.displayMonth, date: this.date})
+    dayClick (date, month, year) {
+      this.$emit('dayClicked', 'Events for ' + this.translateDate(date) + ' of ' + this.translateMonth(month) + ' ' + year)
+      this.$emit('eventSort', {year: year, month: month, date: date})
+      this.$emit('eventList', {year: year, month: month, date: date})
+      this.$emit('birthdayList', {year: year, month: month, date: date})
     },
     translateMonth(month) {
       const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -36,15 +37,13 @@ export default {
 <template>
   <div class="date day-out"
     v-if="this.month !== this.currentMonth.displayMonth"
-    :style="{ 'border-width': this.border.borderWidth + 'px', 'border-color': this.border.borderColor, padding: 16 - this.border.borderWidth + 'px' }"
-  >
+    :style="Object.assign(this.border)">
     <p class="date">{{ date }}</p>
   </div>
   <div class="date day-current"
     v-else-if="this.currentMonth.displayMonth === this.month"
-    :style="{ 'border-width': this.border.borderWidth + 'px', 'border-color': this.border.borderColor, padding: 16 - this.border.borderWidth + 'px' }"
-    @click="dayClick('Events for ' + translateDate(this.date) + ' of ' + translateMonth(this.currentMonth.displayMonth) + ' ' + this.currentMonth.displayYear)"
-  >
+    :style="Object.assign(this.border, this.background)"
+    @click="dayClick(this.date, this.currentMonth.displayMonth, this.currentMonth.displayYear)">
     <p class="date">{{ date }}</p>
   </div>
 </template>

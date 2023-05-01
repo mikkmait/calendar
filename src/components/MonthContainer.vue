@@ -85,26 +85,42 @@ export default {
       return monthName
     },
     borderCalc(year, month, date) {
-      let event = {}
-      let borderWidth = 1
+      let border = {}
+      let borderWidth = 0
       let borderRed = 255
-      let borderGreen = 0
-      let borderBlue = 127
+      let borderGreen = 255
+      let borderBlue = 255
+      let borderAlpha = 0
       let borderColor = 'rgba(' + borderRed + ', ' + borderGreen + ', ' + borderBlue + ', 100%)'
       for (let i = 0; i < this.events.length; i++) {
         if (year + '' + month + '' + date === this.events[i].year + '' + this.events[i].month + '' + this.events[i].date) {
           borderWidth += 1
-          // borderRed -= 16
-          borderGreen += 64
-          borderBlue += 32
+          borderRed -= 32
+          borderGreen -= 16
+          borderBlue -= 16
+          borderAlpha = 100
         }
       }
-      borderColor = 'rgba(' + borderRed + ', ' + borderGreen + ', ' + borderBlue + ', 100%)'
-      event = {
-        'borderColor': borderColor,
-        'borderWidth': borderWidth
+      borderColor = 'rgba(' + borderRed + ', ' + borderGreen + ', ' + borderBlue + ', ' + borderAlpha + '%)'
+      border = {
+        'border-color': borderColor,
+        'border-width': borderWidth + 'px',
+        'padding': 16 - borderWidth + 'px',
       }
-      return event
+      return border
+    },
+    bgCalc(day) {
+      let bg = {}
+      let backgroundColor = 'rgba(255, 0, 127, 35%)'
+      for (let i = 0; i < this.events.length; i++) {
+        if (day === 0 || day === 6) {
+          backgroundColor = 'rgba(255, 255, 255, 10%)'
+        }
+      }
+      bg = {
+        'background-color': backgroundColor,
+      }
+      return bg
     }
   },
   components: { DayContainer, EventList, BirthdayList, AllDay }
@@ -121,6 +137,7 @@ export default {
       :month="day.getMonth()"
       :currentMonth="currentMonth"
       :border="borderCalc(day.getFullYear(), day.getMonth(), day.getDate())"
+      :background="bgCalc(day.getDay())"
       @dayClicked="clickOnDate"
       @eventSort="eventSort"
       @eventList="eventList"
@@ -132,8 +149,14 @@ export default {
       <span class="dialog-heading"></span>
       <button class="dialog-close" @click="closeDialog">X</button>
     </div>
-    <div class="birthday-list"><BirthdayList :birthdays="dateBirthdays" v-if="dateBirthdays.length > 0"/></div> 
-    <div class="event-list"><AllDay :events="dateEvents"/></div>
-    <div class="event-list"><EventList :events="dateEvents" /></div>
+    <div class="birthday-list">
+      <BirthdayList :birthdays="dateBirthdays" v-if="dateBirthdays.length > 0"/>
+    </div> 
+    <div class="event-list">
+      <AllDay :events="dateEvents"/>
+    </div>
+    <div class="event-list">
+      <EventList :events="dateEvents" />
+    </div>
   </dialog>
 </template>
