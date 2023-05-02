@@ -37,13 +37,14 @@ export default {
 <template>
   <div class="date day-out"
     v-if="this.month !== this.currentMonth.displayMonth"
-    :style="Object.assign(this.border)">
+    :style="Object.assign(this.border)"
+    @click="dayClick(this.date, this.month, this.currentMonth.displayYear)">
     <p class="date">{{ date }}</p>
   </div>
   <div class="date day-current"
     v-else-if="this.currentMonth.displayMonth === this.month"
-    :style="Object.assign(this.border, this.background)"
-    @click="dayClick(this.date, this.currentMonth.displayMonth, this.currentMonth.displayYear)">
+    :style="Object.assign(this.border)"
+    @click="dayClick(this.date, this.month, this.currentMonth.displayYear)">
     <p class="date">{{ date }}</p>
   </div>
 </template>

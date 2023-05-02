@@ -13,7 +13,7 @@ export default {
     sortAllDayEvents() {
       let allDayEvents = []
       this.events.forEach(event => {
-        if (event.allDay === true) {
+        if (event.allday === true) {
           allDayEvents.push(event)
         }
       })

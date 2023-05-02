@@ -8,7 +8,7 @@ export default {
     sortEvents() {
       let Events = []
       this.events.forEach(event => {
-        if (event.allDay === false) {
+        if (event.allday === false) {
           Events.push(event)
         }
       })

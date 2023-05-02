@@ -66,7 +66,7 @@ export default {
           type: item.type,
           name: item.name,
           location: item.location,
-          allDay: item.allDay
+          allday: item.allDay
         }
       })
       const mappedFiltered = this.eventSort(date.year + '' + date.month + '' + date.date)

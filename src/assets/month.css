@@ -12,31 +12,29 @@
   transition: opacity linear .3s;
 }
 
-.month-move-right {
-  left: 64px;
+.hidden {
   visibility: hidden;
   opacity: 0;
+  transition: all linear .5s
+}
+
+.month-move-right {
+  left: 64px;
   transition: all linear .5s;
 }
 
 .month-move-farright {
   left: 256px;
-  visibility: hidden;
-  opacity: 0;
   transition: all linear .5s;
 }
 
 .month-move-left {
   left: -64px;
-  visibility: hidden;
-  opacity: 0;
   transition: all linear .5s;
 }
 
 .month-move-farleft {
   left: -256px;
-  visibility: hidden;
-  opacity: 0;
   transition: all linear .5s;
 }
 
@@ -70,6 +68,7 @@ dialog {
 
 .dialog-top {
   background-color: rgba(0, 0, 0, 50%);
+  color: rgba(255, 240, 255, 100%);
   position: sticky;
   top: 0;
   z-index: 1;
@@ -81,25 +80,23 @@ dialog {
 }
 
 .dialog-heading {
-  color:rgba(255, 240, 255, 100%);
   font-weight: bold;
 }
 
 button.dialog-close {
+  background-color: rgba(0, 0, 0, 0%);
   color: rgba(255, 240, 255, 100%);
   border: 0;
-  background-color: rgba(0, 0, 0, 0%);
   cursor: pointer;
 }
 
 button.dialog-close:focus {
-  outline: none;
+  background-color: rgba(0, 0, 0, 0%);
   color: rgba(255, 240, 255, 100%);
   border: 0;
-  background-color: rgba(0, 0, 0, 0%);
+  outline: none;
 }
 
 .event-list {
   z-index: -1;
-  margin: 0px 0px 4px 0px;
 }

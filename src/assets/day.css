@@ -21,6 +21,7 @@
  
   border: 1px solid rgba(127, 127, 127, 25%);
   transition: color linear .7s, border linear 0s;
+  cursor: pointer;
  }
 
 .day-current:hover {
