@@ -2,6 +2,11 @@
 import MonthContainer from './components/MonthContainer.vue'
 import NavButton from './components/NavButton.vue'
 
+// Exercises or questions coming up:
+// 
+// 1. How to apply dynamic styles or classes ???
+// 
+
 export default {
  name: 'App',
  data () {
@@ -53,8 +58,8 @@ export default {
     const getMonth = document.getElementsByClassName('month')
     const getHeading = document.getElementById('heading')
     getHeading.classList.add('hide')
-      if (payload === '<') {for (let item of getMonth) {item.classList.add('month-move-right', 'hidden')}}
-      else if (payload === '>') {for (let item of getMonth) {item.classList.add('month-move-left', 'hidden')}}
+    if (payload === '<') {for (let item of getMonth) {item.classList.add('month-move-right', 'hidden')}}
+    else if (payload === '>') {for (let item of getMonth) {item.classList.add('month-move-left', 'hidden')}}
     setTimeout(() => {
       if (payload === '<') {this.countMth -= 1}
       else if (payload === '>') {this.countMth += 1}

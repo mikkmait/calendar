@@ -43,7 +43,7 @@ export default {
   </div>
   <div class="date day-current"
     v-else-if="this.currentMonth.displayMonth === this.month"
-    :style="Object.assign(this.border)"
+    :style="Object.assign(this.border, this.background)"
     @click="dayClick(this.date, this.month, this.currentMonth.displayYear)">
     <p class="date">{{ date }}</p>
   </div>

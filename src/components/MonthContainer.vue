@@ -1,7 +1,7 @@
 <script>
 import { events } from '../data/events.js'
 import { birthdays } from '../data/events.js'
-import DayContainer from './dayContainer.vue'
+import DayContainer from './DayContainer.vue'
 import EventList from './EventList.vue'
 import BirthdayList from './BirthdayList.vue'
 import AllDay from './AllDay.vue'
